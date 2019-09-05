@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>页面b</title>
+</head>
+
+<body>
+    <div>页面b</div>
+    <button class="btn1">广播</button>
+    <div>
+        <input type="text" class="input1">
+    </div>
+    <div class="chat"></div>
+    <script type="module" >
+        import message from './message.js'
+        var ochat = document.querySelector(".chat");
+        var oinput = document.querySelector(".input1");
+
+        let url = "./worker.js",
+            id = 123,   
+            getMessage = function (data) {
+                console.log(data, 'b----data')
+                var odiv = document.createElement("div");
+                odiv.style.color = "green";
+                odiv.innerHTML = data;
+                ochat.appendChild(odiv);
+            };
+        let fn = message(getMessage, id)
+        document.querySelector(".btn1").onclick = function () {
+            var value = oinput.value;
+            fn(value);
+        };
+        window.addEventListener("storage", function(event) {
+                console.log('bbb', event)
+                
+            });
+  
+    </script>
+</body>
+
+</html>

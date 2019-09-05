@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>页面a</title>
+</head>
+
+<body>
+    <div>页面a</div>
+    <button class="btn1">广播</button>
+    <div>
+        <input type="text" class="input1">
+    </div>
+    <div class="chat"></div>
+    <script>
+        // var worker = new SharedWorker("./worker.js");
+        // worker.port.start();
+        // worker.port.postMessage({id: 122});
+        // document.querySelector(".btn1").onclick = function () {
+        //     var value = oinput.value;
+        //     worker.port.postMessage(value);
+           
+        // };
+        // //接收woker的发送消息
+        // worker.port.onmessage = function (e) {
+        //     setMessage(e.data);
+        // };
+
+        // var ochat = document.querySelector(".chat");
+        // var oinput = document.querySelector(".input1");
+       
+        // var setMessage = function (data) {
+        //     var odiv = document.createElement("div");
+        //     odiv.style.color = "green";
+        //     odiv.innerHTML = data;
+        //     ochat.appendChild(odiv);
+        // };
+    </script>
+     <script type="module" >
+            import message from './message.js'
+            var ochat = document.querySelector(".chat");
+            var oinput = document.querySelector(".input1");
+    
+            let url = "./worker.js",
+                id = 122,   
+                getMessage = function (data) {
+                    console.log(data, 'a----data')
+                    var odiv = document.createElement("div");
+                    odiv.style.color = "green";
+                    odiv.innerHTML = data;
+                    ochat.appendChild(odiv);
+                };
+            let fn = message(getMessage, id)
+            document.querySelector(".btn1").onclick = function () {
+                var value = oinput.value;
+                fn(value);
+            };
+            window.addEventListener("storage", function(event) {
+                console.log('aaa', event)
+                
+            });
+      
+        </script>
+</body>
+
+</html>
